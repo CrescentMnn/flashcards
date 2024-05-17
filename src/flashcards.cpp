@@ -1,5 +1,4 @@
 #include <iostream>
-//#include <stdlib.h>
 #include <windows.h> //sleep f(x)
 #include <string>
 #include <vector>
@@ -43,6 +42,9 @@ void clear_screen(){
 }
 
 void read_cards(int size, const vector<Cards> &input_vector){
+
+    if(input_vector.empty()){ cout << "\n(-) Vector is empty...." << endl; exit(1);}
+
     for(int i=0; i<size; i++){
         cout << "\t\tCard number " << i+1 << endl;
         cout << "\nQuestion: " << input_vector[i].question << endl;
@@ -53,6 +55,8 @@ void read_cards(int size, const vector<Cards> &input_vector){
 }
 
 void standard_seq(int size, const vector<Cards> &input_vector){
+
+    if(input_vector.empty()){ cout << "\n(-) Vector is empty...." << endl; exit(1);}
 
     standard_start:
 
@@ -94,7 +98,7 @@ void standard_seq(int size, const vector<Cards> &input_vector){
     
     cout << "\n\n1. Try again\n2. Exit" << endl;
     cin >> menu_choice;
-    if(menu_choice < 1 || menu_choice > 2){ cout << "\n(-) Input out off bounds...." << endl; exit(0); }
+    if(menu_choice < 1 || menu_choice > 2 ||  cin.fail()){ cout << "\n(-) Input out off bounds...." << endl; exit(0); }
 
     if(menu_choice == 1){
         goto standard_start;
@@ -106,6 +110,8 @@ void standard_seq(int size, const vector<Cards> &input_vector){
 }
 
 void quiz_sequence(int size, const vector<Cards> &input_vector){
+
+    if(input_vector.empty()){ cout << "\n(-) Vector is empty...." << endl; exit(1);}
 
     start:
 
@@ -150,7 +156,7 @@ void quiz_sequence(int size, const vector<Cards> &input_vector){
     cin >> menu_choice;
 
     //err handling
-    if(menu_choice < 1 || menu_choice > 2){ cout << "\n(-) Input out off bounds...." << endl; exit(0); }
+    if(menu_choice < 1 || menu_choice > 2 || cin.fail()){ cout << "\n(-) Input out off bounds...." << endl; exit(0); }
 
     if(menu_choice == 1){
         goto start;
@@ -174,7 +180,7 @@ void main_menu(int size, const vector<Cards> &input_flashcards){
     //cin.ignore();
     
     //error handling for choice
-    if(choice < 1 || choice > 3){ cout << "\n(-) Input outside of bounds...\n" << endl; return; }
+    if(choice < 1 || choice > 3 || cin.fail()){ cout << "\n(-) Input outside of bounds...\n" << endl; return; }
 
     if(choice == 1){
         standard_seq(size, input_flashcards);
@@ -194,6 +200,9 @@ int main(){
     cout << "\t\t\t+---------------------------------------+\n" << endl;
     cout << "\nPlease input the size of the flashcards: " ;
     cin >> num_cards;
+
+    if(num_cards < 1 || cin.fail()){ cout << "\n(-) Input outside of bounds..." << endl; exit(1);}
+
     cin.ignore();
 
     vector<Cards> new_flashcards = create_cards(num_cards);
