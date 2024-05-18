@@ -2,6 +2,7 @@
 #include <windows.h> //sleep f(x)
 #include <string>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -16,6 +17,22 @@ class Cards{
         string answer;
 
 };
+
+void save_session(const vector<Cards>& flashcards, ofstream* file) {    
+
+    if (!file || !file->is_open()) {
+        cout << "Invalid file stream." << endl;
+        return;
+    }
+
+    for (const auto& card : flashcards) {
+        *file << card.number << "," << card.question << "," << card.answer << endl;
+    }
+
+    cout << "Session saved.\n\n" << endl;
+
+    cin.ignore();
+}
 
 vector<Cards> create_cards(int size){
     //creates vector (arr) of cards of size 'size'
@@ -41,7 +58,7 @@ void clear_screen(){
     for(int m=0; m<50; m++){ cout << "\n" << endl;}
 }
 
-void read_cards(const int size, const vector<Cards> &input_vector){
+void read_cards(int size, const vector<Cards> &input_vector){
 
     if(input_vector.empty()){ cout << "\n(-) Vector is empty...." << endl; exit(1);}
 
@@ -54,7 +71,7 @@ void read_cards(const int size, const vector<Cards> &input_vector){
     }   
 }
 
-void standard_seq(const int size, const vector<Cards> &input_vector){
+void standard_seq(int size, const vector<Cards> &input_vector){
 
     if(input_vector.empty()){ cout << "\n(-) Vector is empty...." << endl; exit(1);}
 
@@ -109,7 +126,7 @@ void standard_seq(const int size, const vector<Cards> &input_vector){
 
 }
 
-void quiz_sequence(const int size, const vector<Cards> &input_vector){
+void quiz_sequence(int size, const vector<Cards> &input_vector){
 
     if(input_vector.empty()){ cout << "\n(-) Vector is empty...." << endl; exit(1);}
 
@@ -167,7 +184,7 @@ void quiz_sequence(const int size, const vector<Cards> &input_vector){
 }
 
 //gets the type of gae the user wants to play
-void main_menu(const int size, const vector<Cards> &input_flashcards){
+void main_menu(int size, const vector<Cards> &input_flashcards){
     //prints out options
     int choice = 0;
 
@@ -195,22 +212,96 @@ int main(){
     //size of arr
     int num_cards;
 
+    //menu choice
+    int file_choice = 0;
+
+    //file to use
+    string file_name;
+
+    //file obj
+    ofstream create_file;
+    ifstream open_file;
+
+    //vector of cards
+    vector<Cards> new_flashcards;
+
     cout << "\t\t\t+---------------------------------------+\n" << endl;
     cout << "\t\t\t|           Flashcard Project           |\n" << endl;
     cout << "\t\t\t+---------------------------------------+\n" << endl;
-    cout << "\nPlease input the size of the flashcards: " ;
-    cin >> num_cards;
+    
+    cout << "1. Create a new file\n2. Read a file\n3. Exit\n" << endl;
 
-    if(num_cards < 1 || cin.fail()){ cout << "\n(-) Input outside of bounds..." << endl; exit(1);}
+    cin >> file_choice;
+
+    if(file_choice < 1 ||  file_choice > 3 || cin.fail()){ cout << "(-) Input oustside of bounds..." << endl; exit(1); }
+
+    switch(file_choice){
+
+        case 1: 
+        
+            cout << "Name of the new file: ";
+            cin >> file_name;
+
+            if(cin.fail()){ cout << "error opening file..." << endl; exit(1); }
+
+            file_name+=".txt";
+
+            create_file.open(file_name);
+
+            if(create_file.is_open()){ 
+                cout << "File " << file_name << " succesfully!\n" << endl;
+            }else { cout << "(-) Error opening file..." << endl; exit(1); }
+
+            cout << "\nPlease input the size of the flashcards: " ;
+            cin >> num_cards;
+
+            if(num_cards < 1 || cin.fail()){ cout << "\n(-) Input outside of bounds..." << endl; exit(1);}
+
+            cin.ignore();
+
+            new_flashcards = create_cards(num_cards);   
+
+
+            save_session(new_flashcards, &create_file);
+
+        break;
+
+        case 2: 
+
+            cout << "Enter the name of the existing file: ";
+            cin >> file_name;
+            if(cin.fail()){ cout << "error opening file..." << endl; exit(1); }
+
+            file_name+=".txt";
+
+            open_file.open(file_name);
+
+            if(open_file.is_open()){
+                cout << file_name << " succesfully opened!!\n" << endl;
+            }else{
+                cout << "(-) Error opening the file..." << endl; exit(1); 
+            }
+
+            cin.ignore();
+
+        break;
+
+        case 3: cout << "Goodbye...\n" << endl; exit(0); break;
+
+        default: cout << "(-) Input oustide of bounds..." << endl; exit(1); break;
+
+    }
 
     cin.ignore();
-
-    vector<Cards> new_flashcards = create_cards(num_cards);
 
     while(1){
         clear_screen();
         main_menu(num_cards, new_flashcards);
     }
+
+    //close files
+    open_file.close();
+    create_file.close();
 
     return 0;
 }
