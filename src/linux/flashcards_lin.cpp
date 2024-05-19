@@ -1,7 +1,8 @@
 #include <iostream>
-#include <windows.h> //sleep f(x)
+#include <unistd.h> //sleep f(x)
 #include <string>
 #include <vector>
+#include <limits>
 
 using namespace std;
 
@@ -14,7 +15,6 @@ class Cards{
         int number;
         string question;
         string answer;
-
 };
 
 vector<Cards> create_cards(int size){
@@ -48,9 +48,9 @@ void read_cards(int size, const vector<Cards> &input_vector){
     for(int i=0; i<size; i++){
         cout << "\t\tCard number " << i+1 << endl;
         cout << "\nQuestion: " << input_vector[i].question << endl;
-        Sleep(1000);
+        sleep(1);
         cout << "\nAnwer: " << input_vector[i].answer << endl;
-        Sleep(1000);
+        sleep(1);
     }   
 }
 
@@ -73,7 +73,7 @@ void standard_seq(int size, const vector<Cards> &input_vector){
     cout << "Starting study session...\n\n" << endl;
     cout << "\n\nEach cards question will be printed out, you can answer the question until its correct or escape using the char 'n'\n" << endl;
 
-    Sleep(2 * 1000);
+    sleep(1);
 
     for(int  i=0; i<size; i++){
 
@@ -96,8 +96,12 @@ void standard_seq(int size, const vector<Cards> &input_vector){
 
     cout << "\n\nYou've finised the flashcards for this session!!\n" << endl;
     
-    cout << "\n\n1. Try again\n2. Exit" << endl;
-    cin >> menu_choice;
+    while(cout << "\n\n1. Try again\n2. Exit" && !(cin >> menu_choice)){
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input; please re-enter.\n" << endl;
+    }
+    
     if(menu_choice < 1 || menu_choice > 2 ||  cin.fail()){ cout << "\n(-) Input out off bounds...." << endl; exit(0); }
 
     if(menu_choice == 1){
@@ -130,7 +134,7 @@ void quiz_sequence(int size, const vector<Cards> &input_vector){
     cout << "\nStarting quiz session...\n\nYou will answer the questions as they come, we will not be aware of if they are correct." << endl;
     cout << "\nYour grade will be posted on a scale from 1-10" << endl;
 
-    Sleep(2*1000);
+    sleep(2);
 
     for(int i=0; i<size; i++){
         string gvn_answ;
@@ -151,9 +155,12 @@ void quiz_sequence(int size, const vector<Cards> &input_vector){
     }
 
     cout << "\nYour grade is: " << grade << endl;
-    cout << "\n1. Try again\n2. Exit" << endl;
-
-    cin >> menu_choice;
+    
+    while(cout << "\n1. Try again\n2. Exit" && !(cin >> menu_choice)){
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input; please re-enter.\n" << endl;
+    }
 
     //err handling
     if(menu_choice < 1 || menu_choice > 2 || cin.fail()){ cout << "\n(-) Input out off bounds...." << endl; exit(0); }
@@ -175,9 +182,14 @@ void main_menu(int size, const vector<Cards> &input_flashcards){
     cout << "\t\t\t|               Main Menu               |\n" << endl;
     cout << "\t\t\t+---------------------------------------+\n" << endl;
 
-    cout << "\n1. Study session\n2. Quiz session\n3. Exit\n" << endl;
-    cin >> choice;
     //cin.ignore();
+    
+    while(cout << "\n1. Study session\n2. Quiz session\n3. Exit\n" && !(cin >> choice)){
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input; please re-enter.\n" << endl;
+    }
+    
     
     //error handling for choice
     if(choice < 1 || choice > 3 || cin.fail()){ cout << "\n(-) Input outside of bounds...\n" << endl; return; }
