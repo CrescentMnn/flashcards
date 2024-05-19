@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <limits>
 
 using namespace std;
 
@@ -113,8 +114,12 @@ void standard_seq(int size, const vector<Cards> &input_vector){
 
     cout << "\n\nYou've finised the flashcards for this session!!\n" << endl;
     
-    cout << "\n\n1. Try again\n2. Exit" << endl;
-    cin >> menu_choice;
+    while(cout << "\n\n1. Try again\n2. Exit" && !(cin >> menu_choice)){
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input; please re-enter.\n" << endl;
+    }
+
     if(menu_choice < 1 || menu_choice > 2 ||  cin.fail()){ cout << "\n(-) Input out off bounds...." << endl; exit(0); }
 
     if(menu_choice == 1){
@@ -168,9 +173,12 @@ void quiz_sequence(int size, const vector<Cards> &input_vector){
     }
 
     cout << "\nYour grade is: " << grade << endl;
-    cout << "\n1. Try again\n2. Exit" << endl;
 
-    cin >> menu_choice;
+    while(cout << "\n1. Try again\n2. Exit" && !(cin >> menu_choice)){
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input; please re-enter.\n" << endl;
+    }
 
     //err handling
     if(menu_choice < 1 || menu_choice > 2 || cin.fail()){ cout << "\n(-) Input out off bounds...." << endl; exit(0); }
@@ -192,8 +200,11 @@ void main_menu(int size, const vector<Cards> &input_flashcards){
     cout << "\t\t\t|               Main Menu               |\n" << endl;
     cout << "\t\t\t+---------------------------------------+\n" << endl;
 
-    cout << "\n1. Study session\n2. Quiz session\n3. Exit\n" << endl;
-    cin >> choice;
+    while(cout << "\n1. Study session\n2. Quiz session\n3. Exit\n" && !(cin >> choice)){
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input; please re-enter.\n" << endl;
+    }
     //cin.ignore();
     
     //error handling for choice
