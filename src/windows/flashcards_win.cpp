@@ -2,6 +2,7 @@
 #include <windows.h> //sleep f(x)
 #include <string>
 #include <vector>
+#include <sstream>
 #include <fstream>
 #include <limits>
 
@@ -35,7 +36,51 @@ void save_session(const vector<Cards>& flashcards, ofstream* file) {
     cin.ignore();
 }
 
-vector<Cards> create_cards(int size){
+vector<Cards> readCardsFromFile(const string& filename) {
+    vector<Cards> cards;
+    ifstream file(filename);
+
+    if (!file.is_open()) {
+        cout << "Error opening file!" << endl;
+        return cards;
+    }
+
+    vector<vector<string>> csvRows; // Vector to store CSV rows
+
+    // Read each line from the CSV file
+    for (string line; getline(file, line);) {
+        istringstream ss(move(line));
+        vector<string> row;
+        if (!csvRows.empty()) {
+            // We expect each row to be as big as the first row
+            row.reserve(csvRows.front().size());
+        }
+        // std::getline can split on other characters, here we use ','
+        for (string value; getline(ss, value, ',');) {
+            row.push_back(move(value));
+        }
+        csvRows.push_back(move(row));
+    }
+
+    file.close();
+
+    // Convert csvRows to Cards objects
+    for (const auto& row : csvRows) {
+        if (row.size() != 3) {
+            cout << "Invalid data format in CSV file!" << endl;
+            continue;
+        }
+        Cards card;
+        card.number = stoi(row[0]); // Convert string to int for number
+        card.question = row[1];
+        card.answer = row[2];
+        cards.push_back(card);
+    }
+
+    return cards;
+}
+
+vector<Cards> create_cards(const int size){
     //creates vector (arr) of cards of size 'size'
     vector<Cards> cards_vector(size);
 
@@ -59,7 +104,7 @@ void clear_screen(){
     for(int m=0; m<50; m++){ cout << "\n" << endl;}
 }
 
-void read_cards(int size, const vector<Cards> &input_vector){
+void read_cards(const int size, const vector<Cards> &input_vector){
 
     if(input_vector.empty()){ cout << "\n(-) Vector is empty...." << endl; exit(1);}
 
@@ -72,7 +117,7 @@ void read_cards(int size, const vector<Cards> &input_vector){
     }   
 }
 
-void standard_seq(int size, const vector<Cards> &input_vector){
+void standard_seq(const int size, const vector<Cards> &input_vector){
 
     if(input_vector.empty()){ cout << "\n(-) Vector is empty...." << endl; exit(1);}
 
@@ -131,7 +176,7 @@ void standard_seq(int size, const vector<Cards> &input_vector){
 
 }
 
-void quiz_sequence(int size, const vector<Cards> &input_vector){
+void quiz_sequence(const int size, const vector<Cards> &input_vector){
 
     if(input_vector.empty()){ cout << "\n(-) Vector is empty...." << endl; exit(1);}
 
@@ -192,7 +237,7 @@ void quiz_sequence(int size, const vector<Cards> &input_vector){
 }
 
 //gets the type of gae the user wants to play
-void main_menu(int size, const vector<Cards> &input_flashcards){
+void main_menu(const int size, const vector<Cards> &input_flashcards){
     //prints out options
     int choice = 0;
 
@@ -272,8 +317,11 @@ int main(){
 
             new_flashcards = create_cards(num_cards);   
 
+            cout << new_flashcards.size() << endl;
 
             save_session(new_flashcards, &create_file);
+
+            create_file.close();
 
         break;
 
@@ -293,6 +341,14 @@ int main(){
                 cout << "(-) Error opening the file..." << endl; exit(1); 
             }
 
+            new_flashcards = readCardsFromFile(file_name);
+
+            num_cards = new_flashcards.size();
+
+            cout << new_flashcards.size() << endl;
+
+            open_file.close();
+
             cin.ignore();
 
         break;
@@ -309,10 +365,6 @@ int main(){
         clear_screen();
         main_menu(num_cards, new_flashcards);
     }
-
-    //close files
-    open_file.close();
-    create_file.close();
 
     return 0;
 }
