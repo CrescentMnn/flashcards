@@ -8,8 +8,6 @@
 
 using namespace std;
 
-//TODO: file handling for saving and reading flashcard sessions
-
 //class for cards
 
 class Cards{
