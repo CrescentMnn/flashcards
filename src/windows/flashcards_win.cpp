@@ -157,7 +157,7 @@ void standard_seq(const int size, const vector<Cards> &input_vector){
 
     cout << "\n\nYou've finised the flashcards for this session!!\n" << endl;
     
-    while(cout << "\n\n1. Try again\n2. Exit" && !(cin >> menu_choice)){
+    while(cout << "\n\n1. Try again\n2. Exit\n" && !(cin >> menu_choice)){
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Invalid input; please re-enter.\n" << endl;
@@ -217,7 +217,7 @@ void quiz_sequence(const int size, const vector<Cards> &input_vector){
 
     cout << "\nYour grade is: " << grade << endl;
 
-    while(cout << "\n1. Try again\n2. Exit" && !(cin >> menu_choice)){
+    while(cout << "\n1. Try again\n2. Exit\n" && !(cin >> menu_choice)){
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Invalid input; please re-enter.\n" << endl;
