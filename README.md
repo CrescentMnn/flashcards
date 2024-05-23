@@ -1,4 +1,4 @@
-FLASHCARDS
+##FLASHCARDS
 
 This is a personal project in which i create a simple implementation of a flashcards program, i've created this in order to have a simple tool that helps me study.
 
