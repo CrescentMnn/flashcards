@@ -343,7 +343,7 @@ int main(){
 
             num_cards = new_flashcards.size();
 
-            cout << new_flashcards.size() << endl;
+            //cout << new_flashcards.size() << endl;
 
             open_file.close();
 
