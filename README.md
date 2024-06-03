@@ -66,6 +66,10 @@ To create a new flashcards file, follow these steps:
     ```bash
     ./flashcards
     ```
+    
+    ```bash
+    flashcards.exe
+    ```
 
 2. **Choose the option to create a new file.**
 3. **Enter the name for the new file when prompted.**
@@ -80,6 +84,10 @@ To read an existing flashcards file, follow these steps:
 
     ```bash
     ./flashcards
+    ```
+
+    ```bash
+    flashcards.exe
     ```
 
 2. **Choose the option to read an existing file.**
