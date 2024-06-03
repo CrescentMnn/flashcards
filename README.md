@@ -1,23 +1,77 @@
 ## FLASHCARDS
 
-This is a personal project in which i create a simple implementation of a flashcards program, i've created this in order to have a simple tool that helps me study.
+This is a personal project in which I've implemented a simple flashcards program. It's designed to help with studying by allowing users to create and review flashcards.
 
-It consists of 2 main choices, in which you can create or read a file, in which you will store your flashcards.
+### Installation
 
-The files will be created and/or read in csv format.
+To run the flashcards program, you'll need:
 
-You also have 2 methods of using them:
+- C++ compiler (supporting C++11)
+- Basic understanding of the command line interface
 
-	* quiz like structure, in which you do not know if your answer is correct until you finish the flashcards, you will be graded on a scale of 0-10.
- 
-	* study session, in which you are given the question of the flashcards and you answer, it will tell you whether you are correct or not, you have an option to skip the question.
+#### Dependencies
 
-## Images
+- None
 
-Main Screen:
+#### Building from Source
 
- ![image](https://github.com/CrescentMnn/flashcards/assets/169625322/77b31198-fc86-484c-a84c-d3312be3df28)
+1. **Clone the repository:**
 
-Main Menu:
+    ```bash
+    git clone https://github.com/yourusername/flashcards.git
+    ```
 
-![image](https://github.com/CrescentMnn/flashcards/assets/169625322/b30f5bb0-948a-4a8e-94e2-38f7cd026620)
+2. **Navigate to the project directory:**
+
+    ```bash
+    cd flashcards
+    ```
+
+3. **Compile the program:**
+
+    ```bash
+    g++ -o flashcards main.cpp
+    ```
+
+### Usage
+
+#### Creating a New Flashcards File
+
+To create a new flashcards file, follow these steps:
+
+1. **Run the program:**
+
+    ```bash
+    ./flashcards
+    ```
+
+2. **Choose the option to create a new file.**
+3. **Enter the name for the new file when prompted.**
+4. **Input the size of the flashcards and provide questions and answers for each card.**
+5. **Once finished, the program will save the session to the file.**
+
+#### Reading an Existing Flashcards File
+
+To read an existing flashcards file, follow these steps:
+
+1. **Run the program:**
+
+    ```bash
+    ./flashcards
+    ```
+
+2. **Choose the option to read an existing file.**
+3. **Enter the name of the existing file when prompted.**
+4. **The program will load the flashcards from the file.**
+
+#### Using the Flashcards
+
+After creating or reading a file, you'll be presented with the main menu. From here, you can choose between a study session or a quiz session.
+
+- **Study Session**: You'll be shown each flashcard question one by one, and you can provide answers. The program will tell you if your answer is correct.
+- **Quiz Session**: You'll answer flashcard questions as they come, without immediate feedback. At the end, your grade will be provided based on the number of correct answers.
+
+### Examples
+
+Here's an example of running a study session:
+
