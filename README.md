@@ -66,15 +66,16 @@ To create a new flashcards file, follow these steps:
     ```bash
     ./flashcards
     ```
-    
+    or
+
     ```bash
     flashcards.exe
     ```
 
-2. **Choose the option to create a new file.**
-3. **Enter the name for the new file when prompted.**
-4. **Input the size of the flashcards and provide questions and answers for each card.**
-5. **Once finished, the program will save the session to the file.**
+1. **Choose the option to create a new file.**
+2. **Enter the name for the new file when prompted.**
+3. **Input the size of the flashcards and provide questions and answers for each card.**
+4. **Once finished, the program will save the session to the file.**
 
 #### Reading an Existing Flashcards File
 
@@ -85,6 +86,7 @@ To read an existing flashcards file, follow these steps:
     ```bash
     ./flashcards
     ```
+    or
 
     ```bash
     flashcards.exe
