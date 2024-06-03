@@ -27,10 +27,32 @@ To run the flashcards program, you'll need:
     cd flashcards
     ```
 
-3. **Compile the program:**
+3. **Navigate to the appropriate source folder based on your system:**
+
+    - For Linux:
+    
+    ```bash
+    cd src/linux
+    ```
+    
+    - For Windows:
+    
+    ```bash
+    cd src/windows
+    ```
+
+4. **Compile the program:**
+
+    -For linux:
 
     ```bash
-    g++ -o flashcards main.cpp
+    g++ -o flashcards flashcards_lin.cpp
+    ```
+
+    -For windows:
+
+    ```bash
+    g++ -o flashcards.exe flashcards_win.cpp
     ```
 
 ### Usage
