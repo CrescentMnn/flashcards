@@ -43,13 +43,13 @@ To run the flashcards program, you'll need:
 
 4. **Compile the program:**
 
-    -For linux:
+    - For linux:
 
     ```bash
     g++ -o flashcards flashcards_lin.cpp
     ```
 
-    -For windows:
+    - For windows:
 
     ```bash
     g++ -o flashcards.exe flashcards_win.cpp
