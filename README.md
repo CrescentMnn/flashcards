@@ -18,7 +18,7 @@ To run the flashcards program, you'll need:
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/yourusername/flashcards.git
+    git clone https://github.com/CrescentMnn/flashcards.git
     ```
 
 2. **Navigate to the project directory:**
